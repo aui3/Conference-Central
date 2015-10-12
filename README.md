@@ -46,3 +46,28 @@ The endpoints can be accessed at [Conference Central Endpoints](https://hello-co
 * getSessionsBySpeaker(speaker) -- Given a speaker, return all sessions given by this particular speaker, across all conferences
 + createSession(SessionForm, websafeConferenceKey) -- open only to the organizer of the conference
 
+<b>Session Model </b>
+
+In my Session Model I have made the following design choices:
++ Speaker name is represented as a string with the model
+- The websafekey of the conference that this session belongs to is stored as a string within the model
+* The model also stores the websafekey for the session and this key is used to add a session in a wishlist.
+
+<b>Wish List</b>
+Session wishlist is implemented so that the websafe session keys of sessions in a profile's wishlist are stored as a list in the Profile Model. 
+
+<b>Additional Queries</b>
+Two following session queries are programmed:
++
+- For a patricular speaker, find particular type of sessions
++ For a conference find sessions by a speaker.
+
+<b>Let’s say that you don't like workshops and you don't like sessions after 7 pm. How would you handle a query for all non-workshop sessions before 7 pm? What is the problem for implementing this query? What ways to solve it did you think of?</b>
+
+The above query is not possible because it would involve two inequality queries on properties. This is violating the restriction that an inequality filter can be aplied to atmost one property.
+
+<b>Proposed Solution</b>
+Still To do
+
+<b>Task 4</b>
+Still To do
