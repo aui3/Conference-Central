@@ -1,4 +1,4 @@
-App Engine application for the Udacity training course.
+App Engine application for the Udacity tFSND Project 4 - Conference Central.
 
 ## Products
 - [App Engine][1]
@@ -9,6 +9,11 @@ App Engine application for the Udacity training course.
 ## APIs
 - [Google Cloud Endpoints][3]
 
+##
+Developed an endpoints API, that lets the users to add sessions to conference and  run certain queries on sessions 
+
+##
+
 ## Setup Instructions
 1. Update the value of `application` in `app.yaml` to the app ID you
    have registered in the App Engine admin console and would like to use to host
@@ -17,8 +22,7 @@ App Engine application for the Udacity training course.
    reflect the respective client IDs you have registered in the
    [Developer Console][4].
 1. Update the value of CLIENT_ID in `static/js/app.js` to the Web client ID
-1. (Optional) Mark the configuration files as unchanged as follows:
-   `$ git update-index --assume-unchanged app.yaml settings.py static/js/app.js`
+
 1. Run the app with the devserver using `dev_appserver.py DIR`, and ensure it's running by visiting
    your local server's address (by default [localhost:8080][5].)
 1. Generate your client library(ies) with [the endpoints tool][6].
@@ -31,3 +35,5 @@ App Engine application for the Udacity training course.
 [4]: https://console.developers.google.com/
 [5]: https://localhost:8080/
 [6]: https://developers.google.com/appengine/docs/python/endpoints/endpoints_tool
+
+#The application can be accessed by going to [Conference Central](http://hello-conference-central.appspot.com)
