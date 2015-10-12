@@ -36,4 +36,13 @@ Developed an endpoints API, that lets the users to add sessions to conference an
 [5]: https://localhost:8080/
 [6]: https://developers.google.com/appengine/docs/python/endpoints/endpoints_tool
 
-#The application can be accessed by going to [Conference Central](http://hello-conference-central.appspot.com)
+The application can be accessed by going to [Conference Central](http://hello-conference-central.appspot.com)
+
+The endpoints can be accessed at [Conference Central Endpoints](https://hello-conference-central.appspot.com/_ah/api/explorer)
+
+<b>Task 1:</b>
++ getConferenceSessions(websafeConferenceKey) -- Given a conference, return all sessions
+- getConferenceSessionsByType(websafeConferenceKey, typeOfSession) Given a conference, return all sessions of a specified type (eg lecture, keynote, workshop)
+* getSessionsBySpeaker(speaker) -- Given a speaker, return all sessions given by this particular speaker, across all conferences
++ createSession(SessionForm, websafeConferenceKey) -- open only to the organizer of the conference
+
