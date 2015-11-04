@@ -53,10 +53,12 @@ In my Session Model I have made the following design choices:
 - The websafekey of the conference that this session belongs to is stored as a string within the model
 * The model also stores the websafekey for the session and this key is used to add a session in a wishlist.
 
-<b>Wish List</b>
+<b>Task 2 Wish List</b>
+
 Session wishlist is implemented so that the websafe session keys of sessions in a profile's wishlist are stored as a list in the Profile Model. 
 
-<b>Additional Queries</b>
+<b>Task 3 Additional Queries</b>
+
 Two following session queries are programmed:
 +
 - For a patricular speaker, find particular type of sessions
@@ -73,7 +75,9 @@ So for our query, after filtering for session not equal to workshop (two inequli
 The above query is not possible because it would involve two inequality queries on properties. This is violating the restriction that an inequality filter can be aplied to atmost one property.
 
 <b>Proposed Solution</b>
+
 Build a composite index on type of session and time of session. 
 
 <b>Task 4</b>
-getFeaturedSpeaker() :Using push task queues to set memcache entry for featured speaker. When a new session is created for a given conference, I check whether for this conference, does this speaker have more than one sessions. If so, I add a task in the queue to set in the memcache this speaker as the featured speaker. So the featured speaker will be set on the most recent session added and obviously the conference for this session is added. The getFeaturedSpeaker() endpoint function simply reads the memcache and retrieves the name of the featured speaker.
+
++getFeaturedSpeaker() :Using push task queues to set memcache entry for featured speaker. When a new session is created for a given conference, I check whether for this conference, does this speaker have more than one sessions. If so, I add a task in the queue to set in the memcache this speaker as the featured speaker. So the featured speaker will be set on the most recent session added and obviously the conference for this session is added. The getFeaturedSpeaker() endpoint function simply reads the memcache and retrieves the name of the featured speaker.
