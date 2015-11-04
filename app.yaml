@@ -34,6 +34,10 @@ handlers:       # static then dynamic
   script: conference.api
   secure: always
 
+- url: /tasks/set_featured_speaker
+  script: main.app
+  login: admin
+
 libraries:
 
 - name: endpoints
@@ -42,3 +46,4 @@ libraries:
 # pycrypto library used for OAuth2 (req'd for authenticated APIs)
 - name: pycrypto
   version: latest
+

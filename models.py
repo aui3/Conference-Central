@@ -113,6 +113,11 @@ class BooleanMessage(messages.Message):
     """BooleanMessage-- outbound Boolean value message"""
     data = messages.BooleanField(1)
 
+# for featured speaker
+class FeaturedSpeakerMessage(messages.Message):
+    """FeaturedSpeakerMessage-- outbound featured speaker message"""
+    data = messages.StringField(1)    
+
 class ConflictException(endpoints.ServiceException):
     """ConflictException -- exception mapped to HTTP 409 response"""
     http_status = httplib.CONFLICT    

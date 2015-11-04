@@ -41,10 +41,10 @@ The application can be accessed by going to [Conference Central](http://hello-co
 The endpoints can be accessed at [Conference Central Endpoints](https://hello-conference-central.appspot.com/_ah/api/explorer)
 
 <b>Task 1:</b>
-+ getConferenceSessions(websafeConferenceKey) -- Given a conference, return all sessions
++ getConferenceSessions(websafeConferenceKey) -- Given a conference, return all sessions, takes as input the websafe conference key
 - getConferenceSessionsByType(websafeConferenceKey, typeOfSession) Given a conference, return all sessions of a specified type (eg lecture, keynote, workshop)
 * getSessionsBySpeaker(speaker) -- Given a speaker, return all sessions given by this particular speaker, across all conferences
-+ createSession(SessionForm, websafeConferenceKey) -- open only to the organizer of the conference
++ createSession(SessionForm, websafeConferenceKey) -- open only to the organizer of the conference, date entered in format 2016-01-01
 
 <b>Session Model </b>
 
@@ -64,10 +64,16 @@ Two following session queries are programmed:
 
 <b>Let’s say that you don't like workshops and you don't like sessions after 7 pm. How would you handle a query for all non-workshop sessions before 7 pm? What is the problem for implementing this query? What ways to solve it did you think of?</b>
 
+The not equal to filter (!=) actually performs two queries. One where the inequlity filter is replaced with greater than (>) and second where the inequlaity filter is replaced with a less than (<) filter. A query that has one not equal filter (two inequlity filters on the same prperty) can not have another inequlaity filter. 
+
+So for our query, after filtering for session not equal to workshop (two inequlity filters) we can not have additional inequality filters to check for workshops time greater than (after) 7 pm.
+
+[Source](https://cloud.google.com/appengine/docs/python/datastore/queries#Python_Property_filters)
+
 The above query is not possible because it would involve two inequality queries on properties. This is violating the restriction that an inequality filter can be aplied to atmost one property.
 
 <b>Proposed Solution</b>
-Still To do
+Build a composite index on type of session and time of session. 
 
 <b>Task 4</b>
-Still To do
+getFeaturedSpeaker() :Using push task queues to set memcache entry for featured speaker. When a new session is created for a given conference, I check whether for this conference, does this speaker have more than one sessions. If so, I add a task in the queue to set in the memcache this speaker as the featured speaker. So the featured speaker will be set on the most recent session added and obviously the conference for this session is added. The getFeaturedSpeaker() endpoint function simply reads the memcache and retrieves the name of the featured speaker.

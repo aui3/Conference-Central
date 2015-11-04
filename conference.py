@@ -36,7 +36,14 @@ from models import ConferenceForm, ConferenceForms, SessionForm, SessionForms
 from models import ConferenceQueryForm, ConferenceQueryForms
 
 from models import BooleanMessage
+from models import FeaturedSpeakerMessage
 from models import ConflictException
+
+from google.appengine.api import taskqueue
+from google.appengine.api import memcache
+
+MEMCAHE_KEY = "FEATURED_SPEAKER"
+
 
 CONF_GET_REQUEST = endpoints.ResourceContainer(
     message_types.VoidMessage,
@@ -66,6 +73,11 @@ SESSION_TYPE_SPEAKER = endpoints.ResourceContainer(
     speakerName = messages.StringField(2),
 )
 
+#Request Container for getiing the featured apeaker.
+FEATURED_SPEAKER_GET_REQUEST = endpoints.ResourceContainer(
+    message_types.VoidMessage,
+    speaker=messages.StringField(1),
+    )
 #Request container to get all sessions by a speaker in a conference
 CONFERENCE_SESSION_SPEAKER = endpoints.ResourceContainer(
     message_types.VoidMessage,
@@ -514,9 +526,34 @@ class ConferenceApi(remote.Service):
             # create session & return (modified) SessionForm
             Session(**data).put()
 
+            speaker_name = data['speaker']
+
+            #check to see if for this session, this particular speaker has more than 1 session. If so, this speaker becomes the featured speaker.
+            conf_sessions = Session.query()
+            # get all sessions for this speaker in this conference
+            conf_sessions = conf_sessions.filter( Session.c_websafeKey == wsck)
+            conf_sessions = conf_sessions.filter(Session.speaker == speaker_name)
+            count = conf_sessions.count()
+            print "$$$ %s", count
+
+
+            #if so, add to the taskqueue to put this speaker name in memcache
+            if count > 1:
+                taskqueue.add(params={'speakerName' : speaker_name},
+                                   url='/tasks/set_featured_speaker', method='GET')
+
             return request   
         else:
             raise ConflictException('Unauthorised to create this session')
+
+    
+    #set the memcache with speaker name
+    @staticmethod
+    def _set_speaker_cache(featured_speaker):
+        print "####, %s", featured_speaker
+        memcache.set("MEMCAHE_KEY",featured_speaker)
+
+
 
 
     #Create a session
@@ -728,6 +765,15 @@ class ConferenceApi(remote.Service):
             items=[self._copySessionToForm(ses) for ses in sessions]
         )    
 
+     #Task 4 Endpoint method to get the featured speaker.
+    @endpoints.method(message_types.VoidMessage, FeaturedSpeakerMessage,
+            path='getFeaturedSpeaker',
+            http_method='GET', name='getFeaturedSpeaker')
+    def getFeaturedSpeaker(self, request):
+        """Get featured speaker from memcache""" 
+        spkr=memcache.get("MEMCAHE_KEY")
+        print "^^^ %s", spkr
+        return FeaturedSpeakerMessage(data=spkr)    
 
 
         #filterplayground

@@ -68,9 +68,9 @@ DEFAULTS = {
             setattr(request, "seatsAvailable", data["maxAttendees"])
 
         # make Profile Key from user ID
-        p_key = ndb.Key(Profile, user_id)
+        p_key = request.c_we
         # allocate new Conference ID with Profile key as parent
-        c_id = Conference.allocate_ids(size=1, parent=p_key)[0]
+        s_id = Session.allocate_ids(size=1, parent=p_key)[0]
         # make Conference key from ID
         c_key = ndb.Key(Conference, c_id, parent=p_key)
         data['key'] = c_key
