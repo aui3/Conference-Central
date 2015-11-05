@@ -749,7 +749,7 @@ class ConferenceApi(remote.Service):
         
         #find all sessions in this conference
         confses = Session.query()
-        confses = confses.filter(Session.c_websafeKey == confses)
+        confses = confses.filter(Session.c_websafeKey == confwsk)
 
         sessions = confses.filter(Session.speaker == spkrName)
         sessions = sessions.fetch()
