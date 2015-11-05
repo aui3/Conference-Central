@@ -68,7 +68,8 @@ class Session(ndb.Model):
 
   # This property stroes the duration of the session (such as 1 hours, 2 hours or all day) and is declared as ndb.StringProperty()
    
-    ` speaker         = ndb.StringProperty() ` 
+    ` speaker         = ndb.StringProperty() `
+   
     # This property stroes the name of the speaker and is declared as ndb.StringProperty(). I could have also created a separated Model for Speaker and then let the Speaker be ancestor to Session, similar to how Profile of the creator is an ancestor for Conferences
     
     ` sessionType     = ndb.StringProperty(default='NOT_SPECIFIED') ` # This property stroes the type of session such as 'Lecture', 'Panel' etc and is declared as ndb.StringProperty()
