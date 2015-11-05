@@ -133,7 +133,16 @@ The above query is not possible because it would involve two inequality queries 
 
 <b>Proposed Solution</b>
 
-Build a composite index on type of session and time of session. 
+Build a composite index on type of session and time of session. Once we have built a composite index like :
+
+```
+- kind: Session
+   proprties:
+     - name: sessionType
+     - name: time
+```
+
+we can build our query to include inequality filter on session type and then on time
 
 <b>Task 4</b>
 
