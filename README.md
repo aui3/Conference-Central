@@ -137,13 +137,14 @@ We are able to apply one inequality (not equal to) filter to a query without vio
 
 For my proposed solution, we can run this query for the type of session and retrieve a result set that retrieves all sessions that are not workshops. From this result, we can iterate through it (in a for loop) and compare each item in the result set to see if the time of the session is after 7:00 pm. The time field in the session is an object of type `time`. This lets us have comparisons like sessionTime > 7:00 PM. The sessions satisfying the condition can be copied to a session forms object and the rest don't.
 
-<b>Psuedo code </b>b>
+<b>Psuedo code </b>
 
+```
 cutOffTime = "7:00" (convert to time object in python using strptime())
 for session in sessionsNotWorkshops
 	if session.time < cutOffTime
 		call copysessiontoForm function with session as argument
-
+```
 <b>Task 4</b>
 
 +getFeaturedSpeaker() :Using push task queues to set memcache entry for featured speaker. When a new session is created for a given conference, I check whether for this conference, does this speaker have more than one sessions. If so, I add a task in the queue to set in the memcache this speaker as the featured speaker. So the featured speaker will be set on the most recent session added and obviously the conference for this session is added. The getFeaturedSpeaker() endpoint function simply reads the memcache and retrieves the name of the featured speaker.
