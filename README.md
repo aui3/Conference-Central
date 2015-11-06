@@ -133,16 +133,16 @@ The above query is not possible because it would involve two inequality queries 
 
 <b>Proposed Solution</b>
 
-Build a composite index on type of session and time of session. Once we have built a composite index like :
+We are able to apply one inequality (not equal to) filter to a query without violating a restriction. 
 
-```
-- kind: Session
-   proprties:
-     - name: sessionType
-     - name: time
-```
+For my proposed solution, we can run this query for the type of session and retrieve a result set that retrieves all sessions that are not workshops. From this result, we can iterate through it (in a for loop) and compare each item in the result set to see if the time of the session is after 7:00 pm. The time field in the session is an object of type `time`. This lets us have comparisons like sessionTime > 7:00 PM. The sessions satisfying the condition can be copied to a session forms object and the rest don't.
 
-we can build our query to include inequality filter on session type and then on time
+<b>Psuedo code </b>b>
+
+cutOffTime = "7:00" (convert to time object in python using strptime())
+for session in sessionsNotWorkshops
+	if session.time < cutOffTime
+		call copysessiontoForm function with session as argument
 
 <b>Task 4</b>
 

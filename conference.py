@@ -635,7 +635,7 @@ class ConferenceApi(remote.Service):
             path='getSessionsBySpeaker/{speaker}',
             http_method='GET', name='getSessionsBySpeaker')
     def getSessionsBySpeaker(self, request):
-        """Get list of sessions in a conference by type."""
+        """Get all sessions by speaker"""
         
         #web safe key of this conference
         speaker = request.speaker
@@ -690,7 +690,7 @@ class ConferenceApi(remote.Service):
             path='getSessionsInWishList',
             http_method='POST', name='getSessionsInWishList')
     def getSessionsInWishList(self, request):
-        """Return conferences created by user."""
+        """Return sessions in wishlist"""
         # make sure user is authed
         user = endpoints.get_current_user()
         if not user:
